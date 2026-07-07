@@ -16,7 +16,6 @@ scores.appendChild(announcementDisplay)
 
 
 
-
 function getComputerChoice() {
     let numberChoice = Math.floor(Math.random()*3)+1
     switch (numberChoice) {
@@ -96,6 +95,23 @@ function newGame(str) {
 
 }
 
+function handleClick (event) {
+    playRound(event.target.id, getComputerChoice());
+    humanScoreDisplay.textContent = (`your score: ${humanScore}`)
+    computerScoreDisplay.textContent = (`computer score: ${computerScore}`)
+
+    if (computerScore == 5 && humanScore < 5) {
+        newGame(`you lost! final score ${humanScore} vs ${computerScore}`);
+    } else if (humanScore == 5 && computerScore < 5) {
+        newGame(`you won! final score ${humanScore} vs ${computerScore}`)
+    }
+}
+
+buttons.forEach((button) => {
+        button.addEventListener("click", handleClick)})
+
+
+
 function playGame (){
     humanScore = 0;
     computerScore = 0;
@@ -103,29 +119,6 @@ function playGame (){
     humanScoreDisplay.textContent = 'your score: 0'
     computerScoreDisplay.textContent = "computer score: 0"
     announcementDisplay.textContent = ""
-
-
-    buttons.forEach((button) => {
-        button.addEventListener("click", (event) => {
-            // alert(button.id)
-            playRound(button.id, getComputerChoice());
-            humanScoreDisplay.textContent = (`your score: ${humanScore}`)
-            computerScoreDisplay.textContent = (`computer score: ${computerScore}`)
-
-            if (computerScore == 5 && humanScore < 5) {
-                console.log("yes")
-                newGame(`you lost! final score ${humanScore} vs ${computerScore}`);
-
-            } else if (humanScore == 5 && computerScore < 5) {
-                console.log("yes")
-                newGame(`you won! final score ${humanScore} vs ${computerScore}`)
-            }
-
-        })
-
-    })
-
-
 
 }
 
