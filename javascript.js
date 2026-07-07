@@ -1,5 +1,21 @@
 let humanScore = 0;
 let computerScore = 0;
+const buttons = document.querySelectorAll("button")
+const humanScoreDisplay = document.createElement("div")
+const computerScoreDisplay = document.createElement("div")
+const announcementDisplay = document.createElement("div")
+
+humanScoreDisplay.setAttribute("class", "humanScoreDisplay")
+computerScoreDisplay.setAttribute("class","computerScoreDisplay")
+announcementDisplay.setAttribute("class", "announcementDisplay")
+
+const scores = document.querySelector(".scores")
+scores.appendChild(humanScoreDisplay)
+scores.appendChild(computerScoreDisplay)
+scores.appendChild(announcementDisplay)
+
+
+
 
 function getComputerChoice() {
     let numberChoice = Math.floor(Math.random()*3)+1
@@ -16,28 +32,28 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let humanChoice = prompt("rock paper scissors?");
-    return humanChoice;
-}
+// function getHumanChoice() {
+//     let humanChoice = prompt("rock paper scissors?");
+//     return humanChoice;
+// }
 
 
 function playRound(humanChoice, computerChoice) {
     humanChoice = humanChoice.toLowerCase();
 
     if (humanChoice == computerChoice) {
-                    console.log(`your ${humanChoice} tied with ${computerChoice}`);
+                    announcementDisplay.textContent = (`your ${humanChoice} tied with ${computerChoice}`);
     } else {
 
         switch (humanChoice) {
             case "rock":
                 switch (computerChoice) {
                     case "scissors":
-                        console.log(`you win! ${humanChoice} beats ${computerChoice}`);
+                        announcementDisplay.textContent = (`you win! ${humanChoice} beats ${computerChoice}`);
                         humanScore += 1
                         break;
                     case "paper":
-                        console.log(`you lost :( ${humanChoice} loses to ${computerChoice}`);
+                        announcementDisplay.textContent = (`you lost :( ${humanChoice} loses to ${computerChoice}`);
                         computerScore += 1
                         break;
                 }
@@ -46,11 +62,11 @@ function playRound(humanChoice, computerChoice) {
             case "scissors":
                 switch (computerChoice) {
                     case "paper":
-                        console.log(`you win! ${humanChoice} beats ${computerChoice}`);
+                        announcementDisplay.textContent = (`you win! ${humanChoice} beats ${computerChoice}`);
                         humanScore += 1
                         break;
                     case "rock":
-                        console.log(`you lost :( ${humanChoice} loses to ${computerChoice}`);
+                        announcementDisplay.textContent = (`you lost :( ${humanChoice} loses to ${computerChoice}`);
                         computerScore += 1
                         break;
                 }
@@ -59,11 +75,11 @@ function playRound(humanChoice, computerChoice) {
             case "paper":
                 switch (computerChoice) {
                     case "rock":
-                        console.log(`you win! ${humanChoice} beats ${computerChoice}`);
+                        announcementDisplay.textContent = (`you win! ${humanChoice} beats ${computerChoice}`);
                         humanScore += 1
                         break;
                     case "scissors":
-                        console.log(`you lost :( ${humanChoice} loses to ${computerChoice}`);
+                        announcementDisplay.textContent = (`you lost :( ${humanChoice} loses to ${computerChoice}`);
                         computerScore += 1
                         break;
                 }
@@ -74,25 +90,43 @@ function playRound(humanChoice, computerChoice) {
 
 }
 
+function newGame(str) {
+    alert(`${str}`);
+    playGame();
+
+}
+
 function playGame (){
     humanScore = 0;
     computerScore = 0;
 
-    for (let i=0; i<5; i++) {
-        playRound(getHumanChoice(), getComputerChoice());
-        console.log(`your score: ${humanScore}`);
-        console.log(`computer score: ${computerScore}`);
-    }
+    humanScoreDisplay.textContent = 'your score: 0'
+    computerScoreDisplay.textContent = "computer score: 0"
+    announcementDisplay.textContent = ""
 
-    if (computerScore > humanScore) {
-        console.log(`you lost! final score ${humanScore} vs ${computerScore}`)
-    } else if (humanScore > computerScore) {
-        console.log(`you won! final score ${humanScore} vs ${computerScore}`)
-    } else {
-        console.log(`you tied! final score ${humanScore} vs ${computerScore}`)
-    }
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            // alert(button.id)
+            playRound(button.id, getComputerChoice());
+            humanScoreDisplay.textContent = (`your score: ${humanScore}`)
+            computerScoreDisplay.textContent = (`computer score: ${computerScore}`)
+
+            if (computerScore == 5 && humanScore < 5) {
+                console.log("yes")
+                newGame(`you lost! final score ${humanScore} vs ${computerScore}`);
+
+            } else if (humanScore == 5 && computerScore < 5) {
+                console.log("yes")
+                newGame(`you won! final score ${humanScore} vs ${computerScore}`)
+            }
+
+        })
+
+    })
+
+
 
 }
-
 
 playGame()
