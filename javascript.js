@@ -10,9 +10,10 @@ computerScoreDisplay.setAttribute("class","computerScoreDisplay")
 announcementDisplay.setAttribute("class", "announcementDisplay")
 
 const scores = document.querySelector(".scores")
+const announcement = document.querySelector(".announcement")
 scores.appendChild(humanScoreDisplay)
 scores.appendChild(computerScoreDisplay)
-scores.appendChild(announcementDisplay)
+announcement.appendChild(announcementDisplay)
 
 
 
@@ -30,11 +31,6 @@ function getComputerChoice() {
             break;
     }
 }
-
-// function getHumanChoice() {
-//     let humanChoice = prompt("rock paper scissors?");
-//     return humanChoice;
-// }
 
 
 function playRound(humanChoice, computerChoice) {
